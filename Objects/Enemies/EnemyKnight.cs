@@ -4,7 +4,7 @@ using System;
 
 namespace ATowerDefenceGame
 {
-    class EnemyKnight : IObject
+    class EnemyKnight : Enemy
     {
         public EnemyState State;
         public Vector2 Position;
@@ -22,6 +22,7 @@ namespace ATowerDefenceGame
         }
 
         public EnemyKnight(bool left)
+            : base(100f)
         {
             State = EnemyState.Walking;
             Origin = new Vector2(8, 8);

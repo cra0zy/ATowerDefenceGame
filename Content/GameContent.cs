@@ -15,6 +15,8 @@ namespace ATowerDefenceGame
             Texture.Pixel.SetData<Color>(new[] { Color.White });
             Texture.Tower = content.Load<Texture2D>("Textures/Tower");
             Texture.EnemyKnight = content.Load<Texture2D>("Textures/EnemyKnight");
+            Texture.Fireball = content.Load<Texture2D>("Textures/Fireball");
+            Texture.Wizard = content.Load<Texture2D>("Textures/wizard");
         }
 
         public static class Font
@@ -28,6 +30,8 @@ namespace ATowerDefenceGame
             public static Texture2D Pixel;
             public static Texture2D Tower;
             public static Texture2D EnemyKnight;
+            public static Texture2D Fireball;
+            public static Texture2D Wizard;
         }
     }
 }

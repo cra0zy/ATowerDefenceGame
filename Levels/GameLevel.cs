@@ -7,12 +7,18 @@ namespace ATowerDefenceGame
     class GameLevel : ILevel
     {
 
+        private Wizard _wizard;
+
         public GameLevel()
         {
             BackgroundColor = Color.LightBlue;
 
             int x = GameSettings.BaseWidth / 2 - 64 / 2;
             int y = GameSettings.FloorLevel - 64 * 5;
+
+            var wizardPos = new Vector2(GameSettings.BaseWidth / 2, GameSettings.FloorLevel);
+            _wizard = new Wizard(wizardPos);
+            Objects.Add(_wizard);
 
             Objects.Add(new Tower(0) { Position = new Rectangle(x, y, 64, 64) });
             y += 64;
@@ -26,12 +32,26 @@ namespace ATowerDefenceGame
             if (InputManager.KeyPressed(Keys.Space))
                 AddObject(new EnemyKnight());
 
+            if (InputManager.MousePressed())
+                CreateFireball();
+                
+
             base.Update(gameTime);
+        }
+
+        private void CreateFireball()
+        {
+            var mp = InputManager.MouseState.Position.ToVector2();
+            var dir = mp - _wizard.Position;
+            dir.Normalize();
+            var pos = _wizard.Position + dir * 20;
+            var fb = new Fireball(pos, dir * 200f);
+            Objects.Add(fb);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            /*var rectangle = new Rectangle(0, 0, 1, GameSettings.BaseHeight);
+            var rectangle = new Rectangle(0, 0, 1, GameSettings.BaseHeight);
             var thic = false;
 
             for (rectangle.X = 16; rectangle.X < GameSettings.BaseWidth; rectangle.X += 16)
@@ -48,7 +68,7 @@ namespace ATowerDefenceGame
                 rectangle.Height = thic ? 2 : 1;
                 spriteBatch.DrawRectangle(rectangle, Color.Gray);
                 thic = !thic;
-            }*/
+            }
 
             base.Draw(gameTime, spriteBatch);
 
