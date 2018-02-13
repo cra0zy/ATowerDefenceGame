@@ -16,7 +16,7 @@ namespace ATowerDefenceGame
             Texture.Tower = content.Load<Texture2D>("Textures/Tower");
             Texture.EnemyKnight = content.Load<Texture2D>("Textures/EnemyKnight");
             Texture.Fireball = content.Load<Texture2D>("Textures/Fireball");
-            Texture.Wizard = content.Load<Texture2D>("Textures/wizard");
+            Texture.Wizard = content.Load<Texture2D>("Textures/Wizard");
             Texture.Ground = content.Load<Texture2D>("Textures/Ground");
             Texture.Wand = content.Load<Texture2D>("Textures/Wand");
         }

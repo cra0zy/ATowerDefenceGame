@@ -23,9 +23,8 @@ namespace ATowerDefenceGame
 
             int x = GameSettings.BaseWidth / 2 - 64 / 2;
             int y = GameSettings.FloorLevel - 64 * 5;
-
-            var wizardPos = new Vector2(GameSettings.BaseWidth / 2, y + 64);
-            _wizard = new Wizard(wizardPos);
+            
+            _wizard = new Wizard(new Vector2(GameSettings.BaseWidth / 2, y + 28));
             Objects.Add(_wizard);
 
             Objects.Add(new Tower(0) { Position = new Rectangle(x, y, 64, 64) });
