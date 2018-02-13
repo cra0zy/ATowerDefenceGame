@@ -18,6 +18,7 @@ namespace ATowerDefenceGame
             Texture.Fireball = content.Load<Texture2D>("Textures/Fireball");
             Texture.Wizard = content.Load<Texture2D>("Textures/wizard");
             Texture.Ground = content.Load<Texture2D>("Textures/Ground");
+            Texture.Wand = content.Load<Texture2D>("Textures/Wand");
         }
 
         public static class Font
@@ -34,6 +35,7 @@ namespace ATowerDefenceGame
             public static Texture2D Fireball;
             public static Texture2D Wizard;
             public static Texture2D Ground;
+            public static Texture2D Wand;
         }
     }
 }

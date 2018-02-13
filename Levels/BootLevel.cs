@@ -22,6 +22,7 @@ namespace ATowerDefenceGame
 
         public BootLevel(GraphicsDevice graphicsDevice)
         {
+            Game1.Instance.IsMouseVisible = false;
             BackgroundColor = Color.Black;
             _waittinme = 1.5f;
             _index = 0;

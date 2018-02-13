@@ -14,11 +14,12 @@ namespace ATowerDefenceGame
 
         public GameLevel(GraphicsDevice gd)
         {
+            Game1.Instance.IsMouseVisible = true;
+            BackgroundColor = Color.LightBlue;
+
             _graphicsDevice = gd;
             Enemies = new SafeList<Enemy>();
             Projectiles = new SafeList<Projectile>();
-
-            BackgroundColor = Color.LightBlue;
 
             int x = GameSettings.BaseWidth / 2 - 64 / 2;
             int y = GameSettings.FloorLevel - 64 * 5;

@@ -6,11 +6,15 @@ namespace ATowerDefenceGame
 {
     public class Game1 : Game
     {
+        public static Game1 Instance;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         public Game1()
         {
+            Instance = this;
+
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = GameSettings.BaseWidth;
             graphics.PreferredBackBufferHeight = GameSettings.BaseHeight;
@@ -34,6 +38,7 @@ namespace ATowerDefenceGame
             GameSettings.GDManager = graphics;
 
             GameContent.Init(Content, GraphicsDevice);
+            Mouse.SetCursor(MouseCursor.FromTexture2D(GameContent.Texture.Wand, 1, 1));
             LevelManager.Init(graphics);
             LevelManager.LoadLevel(new BootLevel(GraphicsDevice), false);
         }
