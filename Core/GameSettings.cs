@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 
 namespace ATowerDefenceGame
 {
@@ -6,5 +7,6 @@ namespace ATowerDefenceGame
         public const int BaseWidth = 1024;
         public const int BaseHeight = 576;
         public static int FloorLevel = BaseHeight - 32 * 3;
+        public static GraphicsDeviceManager GDManager;
     }
 }

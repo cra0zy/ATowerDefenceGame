@@ -31,6 +31,7 @@ namespace ATowerDefenceGame
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            GameSettings.GDManager = graphics;
 
             GameContent.Init(Content, GraphicsDevice);
             LevelManager.Init(graphics);

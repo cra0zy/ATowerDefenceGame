@@ -1,10 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace ATowerDefenceGame
 {
     class EnemyKnight : IObject
     {
+        public EnemyState State;
         public Vector2 Position;
         public Vector2 Origin;
         public float Rotation;
@@ -12,14 +14,16 @@ namespace ATowerDefenceGame
         private float _angleChange;
         private Vector2 _movement;
         private SpriteEffects _effect;
+        private const float _attackpower = 4f;
 
         public EnemyKnight() : this(RngGenerator.GetBool())
         {
-
+            
         }
 
         public EnemyKnight(bool left)
         {
+            State = EnemyState.Walking;
             Origin = new Vector2(8, 8);
             Position = new Vector2(
                 left ? -40f : GameSettings.BaseWidth + 40f, 
@@ -39,14 +43,25 @@ namespace ATowerDefenceGame
                 _angleChange *= -1;
 
             // move up down
-            if (Position.Y < GameSettings.FloorLevel - Origin.Y - 3 || 
+            if (Position.Y < GameSettings.FloorLevel - Origin.Y - 3 ||
                 Position.Y > GameSettings.FloorLevel - Origin.Y + 3)
                 _movement.Y *= -1;
 
             // update values
             Rotation += (float)gameTime.ElapsedGameTime.TotalSeconds * _angleChange;
-            Position.X += (float)gameTime.ElapsedGameTime.TotalSeconds * _movement.X;
             Position.Y += (float)gameTime.ElapsedGameTime.TotalSeconds * _movement.Y;
+
+            if (State == EnemyState.Walking)
+            {
+                Position.X += (float)gameTime.ElapsedGameTime.TotalSeconds * _movement.X;
+
+                if (Math.Abs(Position.X - GameSettings.BaseWidth / 2) < 20f + Origin.X)
+                    State = EnemyState.Attacking;
+            }
+            else
+            {
+                Tower.GetBottomTower().DealDamage(_attackpower * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
