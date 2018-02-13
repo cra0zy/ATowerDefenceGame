@@ -1,3 +1,4 @@
+using ATowerDefenceGame.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
@@ -6,16 +7,23 @@ namespace ATowerDefenceGame
 {
     class GameLevel : ILevel
     {
+        private GraphicsDevice _graphicsDevice;
         private Wizard _wizard;
+        public SafeList<Enemy> Enemies;
+        public SafeList<Projectile> Projectiles;
 
-        public GameLevel()
+        public GameLevel(GraphicsDevice gd)
         {
+            _graphicsDevice = gd;
+            Enemies = new SafeList<Enemy>();
+            Projectiles = new SafeList<Projectile>();
+
             BackgroundColor = Color.LightBlue;
 
             int x = GameSettings.BaseWidth / 2 - 64 / 2;
             int y = GameSettings.FloorLevel - 64 * 5;
 
-            var wizardPos = new Vector2(GameSettings.BaseWidth / 2, GameSettings.FloorLevel);
+            var wizardPos = new Vector2(GameSettings.BaseWidth / 2, y + 64);
             _wizard = new Wizard(wizardPos);
             Objects.Add(_wizard);
 
@@ -29,7 +37,7 @@ namespace ATowerDefenceGame
             {
                 for (int gy = GameSettings.FloorLevel; gy < GameSettings.BaseHeight; gy += 32)
                 {
-                    AddObject(new Ground(
+                    Objects.Add(new Ground(
                         gy == GameSettings.FloorLevel,
                         new Rectangle(gx, gy, 32, 32)
                     ));
@@ -40,23 +48,35 @@ namespace ATowerDefenceGame
         public override void Update(GameTime gameTime)
         {
             if (InputManager.KeyPressed(Keys.Space))
-                AddObject(new EnemyKnight());
+                Enemies.Add(new EnemyKnight());
 
             if (InputManager.MousePressed())
                 CreateFireball();
-                
 
             base.Update(gameTime);
+
+            foreach(var enemy in Enemies)
+                  enemy.Update(gameTime);
+            foreach (var projectile in Projectiles)
+            {
+                projectile.Update(gameTime);
+                if (projectile.Destroyed)
+                    Projectiles.Remove(projectile);
+            }
+
+            Projectiles.Commit();
+            Enemies.Commit();
         }
 
         private void CreateFireball()
         {
             var mp = InputManager.MouseState.Position.ToVector2();
+            mp = ScreenToTarget(mp);
             var dir = mp - _wizard.Position;
             dir.Normalize();
             var pos = _wizard.Position + dir * 20;
             var fb = new Fireball(pos, dir * 200f);
-            Objects.Add(fb);
+            Projectiles.Add(fb);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -81,6 +101,18 @@ namespace ATowerDefenceGame
             }
 
             base.Draw(gameTime, spriteBatch);
+
+            foreach (var enemy in Enemies)
+                enemy.Draw(gameTime, spriteBatch);
+            foreach (var projectile in Projectiles)
+                projectile.Draw(gameTime, spriteBatch);
+        }
+
+        public Vector2 ScreenToTarget(Vector2 v)
+        {
+            var x = v.X / _graphicsDevice.PresentationParameters.BackBufferWidth * GameSettings.BaseWidth;
+            var y = v.Y / _graphicsDevice.PresentationParameters.BackBufferHeight * GameSettings.BaseHeight;
+            return new Vector2(x, y);
         }
     }
 }

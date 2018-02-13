@@ -8,26 +8,46 @@ namespace ATowerDefenceGame
         public float Damage;
         public Vector2 Speed;
         public Vector2 Position;
-        public abstract Rectangle BoundingBox { get; }
         public Texture2D Texture { get; }
-        private Vector2 _texCenter;
+        public bool Destroyed;
+
+        public abstract Vector2 Origin { get; }
+        public abstract float Radius { get; }
+
+        private float Top => Position.Y - Origin.Y;
+        private float Bottom => Position.Y + Origin.Y;
+        private float Left => Position.X - Origin.X;
+        private float Right => Position.X + Origin.X;
 
         public Projectile(Vector2 position, Texture2D texture)
         {
             Position = position;
             Texture = texture;
-            _texCenter = new Vector2(Texture.Width / 2, Texture.Height / 2);
         }
 
-        public void Hit(Enemy enemy)
+        public virtual void Hit(Enemy enemy)
         {
             enemy.Health -= Damage;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            var dt = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            Position += dt * Speed;
+            if (IsOffscreen())
+                Destroyed = true;
+        }
+
+        public bool IsOffscreen()
+        {
+            return (Bottom < 0 || Top > GameSettings.BaseHeight) &&
+                   (Right < 0 || Left > GameSettings.BaseWidth);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             var rot = Speed.GetAngle();
-            spriteBatch.Draw(Texture, Position, null, Color.White, rot, _texCenter, Vector2.One, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Texture, Position, null, Color.White, rot, Origin, Vector2.One, SpriteEffects.None, 0f);
         }
     }
 }

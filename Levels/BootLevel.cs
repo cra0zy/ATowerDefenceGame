@@ -18,11 +18,15 @@ namespace ATowerDefenceGame
         private int _index;
         private float _waittinme;
 
-        public BootLevel()
+        private GraphicsDevice _graphicsDevice;
+
+        public BootLevel(GraphicsDevice graphicsDevice)
         {
             BackgroundColor = Color.Black;
             _waittinme = 1.5f;
             _index = 0;
+
+            _graphicsDevice = graphicsDevice;
         }
 
         public override void Update(GameTime gameTime)
@@ -31,7 +35,7 @@ namespace ATowerDefenceGame
             {
                 if (_index == _lines.Length)
                 {
-                    LevelManager.LoadLevel(new GameLevel());
+                    LevelManager.LoadLevel(new GameLevel(_graphicsDevice));
                     return;
                 }
 

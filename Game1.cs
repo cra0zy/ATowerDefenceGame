@@ -18,7 +18,7 @@ namespace ATowerDefenceGame
             graphics.HardwareModeSwitch = false;
 
             Content.RootDirectory = "Content";
-            IsMouseVisible = false;
+            IsMouseVisible = true;
         }
 
         protected override void Initialize()
@@ -35,7 +35,7 @@ namespace ATowerDefenceGame
 
             GameContent.Init(Content, GraphicsDevice);
             LevelManager.Init(graphics);
-            LevelManager.LoadLevel(new BootLevel(), false);
+            LevelManager.LoadLevel(new BootLevel(GraphicsDevice), false);
         }
 
         protected override void Update(GameTime gameTime)
