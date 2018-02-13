@@ -7,6 +7,7 @@ namespace ATowerDefenceGame
 {
     class Tower : IObject
     {
+        public float Health { get; set;  }
         public Rectangle Position { get; set; }
         private Rectangle _sourceRectangle;
 
@@ -17,11 +18,12 @@ namespace ATowerDefenceGame
 
         public Tower() : this((int)(RngGenerator.GetUInt32() % 4) + 1)
         {
-            
+            Health = 100f;
         }
 
-        private void Init(int index)
+        public void DealDamage(float damage)
         {
+            Health -= damage;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
