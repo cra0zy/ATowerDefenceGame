@@ -22,7 +22,7 @@ namespace ATowerDefenceGame
             Projectiles = new SafeList<Projectile>();
 
             int x = GameSettings.BaseWidth / 2 - 64 / 2;
-            int y = GameSettings.FloorLevel - 64 * 5;
+            int y = GameSettings.FloorLevel - 64 * 5 + 4;
             
             _wizard = new Wizard(new Vector2(GameSettings.BaseWidth / 2, y + 28));
             Objects.Add(_wizard);
