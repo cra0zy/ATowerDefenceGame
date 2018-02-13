@@ -6,7 +6,6 @@ namespace ATowerDefenceGame
 {
     class GameLevel : ILevel
     {
-
         private Wizard _wizard;
 
         public GameLevel()
@@ -25,6 +24,17 @@ namespace ATowerDefenceGame
 
             for (; y < GameSettings.FloorLevel; y += 64)
                 Objects.Add(new Tower() { Position = new Rectangle(x, y, 64, 64) });
+
+            for (int gx = 0; gx < GameSettings.BaseWidth; gx+= 32)
+            {
+                for (int gy = GameSettings.FloorLevel; gy < GameSettings.BaseHeight; gy += 32)
+                {
+                    AddObject(new Ground(
+                        gy == GameSettings.FloorLevel,
+                        new Rectangle(gx, gy, 32, 32)
+                    ));
+                }
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -71,8 +81,6 @@ namespace ATowerDefenceGame
             }
 
             base.Draw(gameTime, spriteBatch);
-
-            spriteBatch.DrawRectangle(new Rectangle(0, GameSettings.FloorLevel, GameSettings.BaseWidth, GameSettings.BaseHeight - GameSettings.FloorLevel), Color.SandyBrown);
         }
     }
 }

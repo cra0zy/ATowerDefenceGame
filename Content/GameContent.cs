@@ -17,6 +17,7 @@ namespace ATowerDefenceGame
             Texture.EnemyKnight = content.Load<Texture2D>("Textures/EnemyKnight");
             Texture.Fireball = content.Load<Texture2D>("Textures/Fireball");
             Texture.Wizard = content.Load<Texture2D>("Textures/wizard");
+            Texture.Ground = content.Load<Texture2D>("Textures/Ground");
         }
 
         public static class Font
@@ -32,6 +33,7 @@ namespace ATowerDefenceGame
             public static Texture2D EnemyKnight;
             public static Texture2D Fireball;
             public static Texture2D Wizard;
+            public static Texture2D Ground;
         }
     }
 }
