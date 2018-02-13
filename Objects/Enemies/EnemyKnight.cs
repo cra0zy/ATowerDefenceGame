@@ -7,8 +7,6 @@ namespace ATowerDefenceGame
     class EnemyKnight : Enemy
     {
         public EnemyState State;
-        public Vector2 Position;
-        public Vector2 Origin;
         public float Rotation;
         
         private float _angleChange;
@@ -26,6 +24,7 @@ namespace ATowerDefenceGame
         {
             State = EnemyState.Walking;
             Origin = new Vector2(8, 8);
+            Radius = 8f;
             Position = new Vector2(
                 left ? -40f : GameSettings.BaseWidth + 40f, 
                 GameSettings.FloorLevel - Origin.Y

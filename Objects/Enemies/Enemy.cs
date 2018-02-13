@@ -1,7 +1,14 @@
-﻿namespace ATowerDefenceGame
+﻿using Microsoft.Xna.Framework;
+
+namespace ATowerDefenceGame
 {
     abstract class Enemy : IObject
     {
+        public Vector2 Origin;
+        public float Radius;
+        public Circle Bounding => new Circle(Position, Radius);
+        public Vector2 Position;
+
         public float MaxHealth { get; }
         public float Health { get; set; }
 

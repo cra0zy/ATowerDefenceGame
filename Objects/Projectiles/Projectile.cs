@@ -14,6 +14,8 @@ namespace ATowerDefenceGame
         public abstract Vector2 Origin { get; }
         public abstract float Radius { get; }
 
+        public Circle Bounding => new Circle(Position, Radius);
+
         private float Top => Position.Y - Origin.Y;
         private float Bottom => Position.Y + Origin.Y;
         private float Left => Position.X - Origin.X;

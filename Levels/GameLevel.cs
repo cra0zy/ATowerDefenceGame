@@ -7,6 +7,8 @@ namespace ATowerDefenceGame
 {
     class GameLevel : ILevel
     {
+        private static readonly float ProjectileCircleRadius;
+
         private GraphicsDevice _graphicsDevice;
         private Wizard _wizard;
         public SafeList<Enemy> Enemies;
@@ -74,6 +76,8 @@ namespace ATowerDefenceGame
             mp = ScreenToTarget(mp);
             var dir = mp - _wizard.Position;
             dir.Normalize();
+            var spawnCircle = new Circle(_wizard.Position, ProjectileCircleRadius);
+            spawnCircle.Sample();
             var pos = _wizard.Position + dir * 20;
             var fb = new Fireball(pos, dir * 200f);
             Projectiles.Add(fb);
