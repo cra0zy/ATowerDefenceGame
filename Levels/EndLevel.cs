@@ -6,23 +6,30 @@ using System.Text;
 
 namespace ATowerDefenceGame
 {
-    class BootLevel : ILevel
+    class EndLevel : ILevel
     {
-        private string[] _lines = new[] {
-            "Once upon time...",
-            "                                                                 in a land far away",
-            "                                                         there lived a princess",
-            "       who got kidnapped",
-            "                  and you are the bastard who did it!!!"
-        };
+        private (string text, Vector2 position)[] _lines;
+
         private int _index;
         private float _waittinme;
 
-        public BootLevel()
+        public EndLevel()
         {
             BackgroundColor = Color.Black;
-            _waittinme = 1.5f;
+            _waittinme = 1f;
             _index = 0;
+
+            _lines = new(string, Vector2)[2];
+            _lines[0] = (
+                "And so, the evil wizard and princess lived happily ever after...",
+                new Vector2(32, 32)
+            );
+
+            var ms = GameContent.Font.IntroFont.MeasureString("The End");
+            _lines[1] = (
+                "The End",
+                new Vector2(GameSettings.BaseWidth - ms.X - 16, GameSettings.BaseHeight - ms.Y - 8)
+            );
         }
 
         public override void Update(GameTime gameTime)
@@ -31,13 +38,11 @@ namespace ATowerDefenceGame
             {
                 if (_index == _lines.Length)
                 {
-                    LevelManager.LoadLevel(new GameLevel());
                     return;
                 }
 
-                var y = GameContent.Font.IntroFontSize * 2 * _index;
-                Objects.Add(new FadeInText(_lines[_index]) {
-                    Position = new Vector2(16, y)
+                Objects.Add(new FadeInText(_lines[_index].text) {
+                    Position = _lines[_index].position
                 });
 
                 _waittinme = 0f;
