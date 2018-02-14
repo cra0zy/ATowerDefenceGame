@@ -7,7 +7,7 @@ namespace ATowerDefenceGame
 {
     class GameLevel : ILevel
     {
-        private static readonly float ProjectileCircleRadius;
+        private static readonly float ProjectileCircleRadius = 30f;
 
         private GraphicsDevice _graphicsDevice;
         private Wizard _wizard;
@@ -57,13 +57,25 @@ namespace ATowerDefenceGame
 
             base.Update(gameTime);
 
-            foreach(var enemy in Enemies)
-                  enemy.Update(gameTime);
             foreach (var projectile in Projectiles)
             {
                 projectile.Update(gameTime);
+
+                // brute-force this for now
+                foreach (var enemy in Enemies)
+                {
+                    if (enemy.Bounding.Overlaps(projectile.Bounding))
+                        projectile.Hit(enemy);
+                }
+
                 if (projectile.Destroyed)
                     Projectiles.Remove(projectile);
+            }
+            foreach (var enemy in Enemies)
+            {
+                enemy.Update(gameTime);
+                if (enemy.Dead)
+                    Enemies.Remove(enemy);
             }
 
             Projectiles.Commit();
@@ -74,11 +86,10 @@ namespace ATowerDefenceGame
         {
             var mp = InputManager.MouseState.Position.ToVector2();
             mp = ScreenToTarget(mp);
-            var dir = mp - _wizard.Position;
-            dir.Normalize();
             var spawnCircle = new Circle(_wizard.Position, ProjectileCircleRadius);
-            spawnCircle.Sample();
-            var pos = _wizard.Position + dir * 20;
+            var pos = spawnCircle.Sample();
+            var dir = mp - pos;
+            dir.Normalize();
             var fb = new Fireball(pos, dir * 200f);
             Projectiles.Add(fb);
         }

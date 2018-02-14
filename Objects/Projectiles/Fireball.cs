@@ -12,6 +12,7 @@ namespace ATowerDefenceGame
             : base(position, GameContent.Texture.Fireball)
         {
             Speed = speed;
+            Damage = 50;
         }
     }
 }

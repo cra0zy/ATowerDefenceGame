@@ -30,6 +30,7 @@ namespace ATowerDefenceGame
         public virtual void Hit(Enemy enemy)
         {
             enemy.Health -= Damage;
+            Destroyed = true;
         }
 
         public override void Update(GameTime gameTime)

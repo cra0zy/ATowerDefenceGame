@@ -25,5 +25,10 @@ namespace ATowerDefenceGame
             var phi = MathHelper.TwoPi * RngGenerator.GetFloat();
             return Position + new Vector2(r * (float) Math.Cos(phi), r * (float) Math.Sin(phi));
         }
+
+        public bool Overlaps(Circle other)
+        {
+            return Vector2.Distance(this.Position, other.Position) < this.Radius + other.Radius;
+        }
     }
 }

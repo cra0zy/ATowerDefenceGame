@@ -17,6 +17,7 @@ namespace ATowerDefenceGame
         public Enemy(float maxHealth)
         {
             MaxHealth = maxHealth;
+            Health = MaxHealth;
         }
     }
 }
