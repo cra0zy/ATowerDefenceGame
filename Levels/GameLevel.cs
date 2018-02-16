@@ -25,13 +25,13 @@ namespace ATowerDefenceGame
             int y = GameSettings.FloorLevel - 64 * 5 + 4;
             
             _wizard = new Wizard(new Vector2(GameSettings.BaseWidth / 2, y + 28));
-            Objects.Add(_wizard);
+            BackgroundObjects.Add(_wizard);
 
-            Objects.Add(new Tower(0) { Position = new Rectangle(x, y, 64, 64) });
+            BackgroundObjects.Add(new Tower(0) { Position = new Rectangle(x, y, 64, 64) });
             y += 64;
 
             for (; y < GameSettings.FloorLevel; y += 64)
-                Objects.Add(new Tower() { Position = new Rectangle(x, y, 64, 64) });
+                BackgroundObjects.Add(new Tower() { Position = new Rectangle(x, y, 64, 64) });
         }
 
         public override void Update(GameTime gameTime)
@@ -80,7 +80,7 @@ namespace ATowerDefenceGame
             Projectiles.Add(fb);
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void BeforeDraw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             var rectangle = new Rectangle(0, 0, 1, GameSettings.BaseHeight);
             var thic = false;
@@ -101,6 +101,11 @@ namespace ATowerDefenceGame
                 thic = !thic;
             }
 
+            base.BeforeDraw(gameTime, spriteBatch);
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
             spriteBatch.Draw(
                 GameContent.Texture.Ground,
                 new Vector2(0, GameSettings.FloorLevel - 32),

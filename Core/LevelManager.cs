@@ -52,6 +52,7 @@ namespace ATowerDefenceGame
             _graphicsDeviceManager.GraphicsDevice.Clear(BackgroundColor);
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            _currentLevel.BeforeDraw(gameTime, spriteBatch);
             _currentLevel.Draw(gameTime, spriteBatch);
 
             if (_transition)
