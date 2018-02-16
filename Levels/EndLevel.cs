@@ -15,7 +15,7 @@ namespace ATowerDefenceGame
 
         public EndLevel()
         {
-            Game1.Instance.IsMouseVisible = false;
+            GameSettings.SetCursor(CursorType.None);
             BackgroundColor = Color.Black;
             _waittinme = 1f;
             _index = 0;

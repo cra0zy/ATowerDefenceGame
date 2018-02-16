@@ -10,16 +10,21 @@ namespace ATowerDefenceGame
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        RasterizerState rasterizerState;
 
         public Game1()
         {
             Instance = this;
 
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferMultiSampling = true;
             graphics.PreferredBackBufferWidth = GameSettings.BaseWidth;
             graphics.PreferredBackBufferHeight = GameSettings.BaseHeight;
             graphics.IsFullScreen = true;
             graphics.HardwareModeSwitch = false;
+
+            rasterizerState = new RasterizerState();
+            rasterizerState.MultiSampleAntiAlias = true;
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -35,10 +40,10 @@ namespace ATowerDefenceGame
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            GameSettings.GDManager = graphics;
 
             GameContent.Init(Content, GraphicsDevice);
-            Mouse.SetCursor(MouseCursor.FromTexture2D(GameContent.Texture.Wand, 1, 1));
+            GameSettings.Init(graphics);
+
             LevelManager.Init(graphics);
             LevelManager.LoadLevel(new BootLevel(GraphicsDevice), false);
         }
@@ -59,7 +64,9 @@ namespace ATowerDefenceGame
             GraphicsDevice.Clear(LevelManager.BackgroundColor);
             LevelManager.Draw(gameTime, spriteBatch);
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(
+                rasterizerState: this.rasterizerState
+            );
             spriteBatch.Draw(LevelManager.ScreenSpace, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height), null, Color.White);
             spriteBatch.End();
 

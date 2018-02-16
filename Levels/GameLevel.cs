@@ -9,17 +9,15 @@ namespace ATowerDefenceGame
     {
         private static readonly float ProjectileCircleRadius = 30f;
 
-        private GraphicsDevice _graphicsDevice;
         private Wizard _wizard;
         public SafeList<Enemy> Enemies;
         public SafeList<Projectile> Projectiles;
 
-        public GameLevel(GraphicsDevice gd)
+        public GameLevel()
         {
-            Game1.Instance.IsMouseVisible = true;
+            GameSettings.SetCursor(CursorType.Wand);
             BackgroundColor = Color.LightBlue;
 
-            _graphicsDevice = gd;
             Enemies = new SafeList<Enemy>();
             Projectiles = new SafeList<Projectile>();
 
@@ -84,8 +82,7 @@ namespace ATowerDefenceGame
 
         private void CreateFireball()
         {
-            var mp = InputManager.MouseState.Position.ToVector2();
-            mp = ScreenToTarget(mp);
+            var mp = InputManager.MousePosition.ToVector2();
             var spawnCircle = new Circle(_wizard.Position, ProjectileCircleRadius);
             var pos = spawnCircle.Sample();
             var dir = mp - pos;
@@ -121,13 +118,6 @@ namespace ATowerDefenceGame
                 enemy.Draw(gameTime, spriteBatch);
             foreach (var projectile in Projectiles)
                 projectile.Draw(gameTime, spriteBatch);
-        }
-
-        public Vector2 ScreenToTarget(Vector2 v)
-        {
-            var x = v.X / _graphicsDevice.PresentationParameters.BackBufferWidth * GameSettings.BaseWidth;
-            var y = v.Y / _graphicsDevice.PresentationParameters.BackBufferHeight * GameSettings.BaseHeight;
-            return new Vector2(x, y);
         }
     }
 }

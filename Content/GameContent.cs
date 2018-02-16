@@ -10,6 +10,7 @@ namespace ATowerDefenceGame
         {
             Font.IntroFont = content.Load<SpriteFont>("Fonts/IntroFont");
             Font.IntroFontSize = Font.IntroFont.MeasureString("M").Y + Font.IntroFont.Spacing;
+            Font.TitleFont = content.Load<SpriteFont>("Fonts/TitleFont");
 
             Texture.Pixel = new Texture2D(graphics, 1, 1);
             Texture.Pixel.SetData<Color>(new[] { Color.White });
@@ -19,12 +20,15 @@ namespace ATowerDefenceGame
             Texture.Wizard = content.Load<Texture2D>("Textures/Wizard");
             Texture.Ground = content.Load<Texture2D>("Textures/Ground");
             Texture.Wand = content.Load<Texture2D>("Textures/Wand");
+            Texture.Pointer = content.Load<Texture2D>("Textures/Pointer");
         }
 
         public static class Font
         {
             public static SpriteFont IntroFont;
             public static float IntroFontSize;
+
+            public static SpriteFont TitleFont;
         }
 
         public static class Texture
@@ -36,6 +40,7 @@ namespace ATowerDefenceGame
             public static Texture2D Wizard;
             public static Texture2D Ground;
             public static Texture2D Wand;
+            public static Texture2D Pointer;
         }
     }
 }

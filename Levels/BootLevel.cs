@@ -22,7 +22,7 @@ namespace ATowerDefenceGame
 
         public BootLevel(GraphicsDevice graphicsDevice)
         {
-            Game1.Instance.IsMouseVisible = false;
+            GameSettings.SetCursor(CursorType.None);
             BackgroundColor = Color.Black;
             _waittinme = 1.5f;
             _index = 0;
@@ -36,7 +36,7 @@ namespace ATowerDefenceGame
             {
                 if (_index == _lines.Length)
                 {
-                    LevelManager.LoadLevel(new GameLevel(_graphicsDevice));
+                    LevelManager.LoadLevel(new MenuLevel());
                     return;
                 }
 

@@ -10,6 +10,11 @@ namespace ATowerDefenceGame
         public static MouseState MouseState;
         public static MouseState PrevMouseState;
 
+        public static Point MousePosition => new Point(
+            MouseState.X * GameSettings.BaseWidth / GameSettings.GDManager.GraphicsDevice.PresentationParameters.BackBufferWidth,
+            MouseState.Y * GameSettings.BaseHeight / GameSettings.GDManager.GraphicsDevice.PresentationParameters.BackBufferHeight
+        );
+
         public static void Update()
         {
             PrevKeyState = KeyState;
