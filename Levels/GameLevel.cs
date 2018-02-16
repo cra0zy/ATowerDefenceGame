@@ -32,17 +32,6 @@ namespace ATowerDefenceGame
 
             for (; y < GameSettings.FloorLevel; y += 64)
                 Objects.Add(new Tower() { Position = new Rectangle(x, y, 64, 64) });
-
-            for (int gx = 0; gx < GameSettings.BaseWidth; gx+= 32)
-            {
-                for (int gy = GameSettings.FloorLevel; gy < GameSettings.BaseHeight; gy += 32)
-                {
-                    Objects.Add(new Ground(
-                        gy == GameSettings.FloorLevel,
-                        new Rectangle(gx, gy, 32, 32)
-                    ));
-                }
-            }
         }
 
         public override void Update(GameTime gameTime)
@@ -111,6 +100,12 @@ namespace ATowerDefenceGame
                 spriteBatch.DrawRectangle(rectangle, Color.Gray);
                 thic = !thic;
             }
+
+            spriteBatch.Draw(
+                GameContent.Texture.Ground,
+                new Vector2(0, GameSettings.FloorLevel - 32),
+                Color.White
+            );
 
             base.Draw(gameTime, spriteBatch);
 
