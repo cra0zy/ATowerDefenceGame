@@ -29,7 +29,7 @@ namespace ATowerDefenceGame
         public override void Update(GameTime gameTime)
         {
             var hover = _size.Contains(InputManager.MousePosition);
-            _alpha = hover ? 0.5f : 0.1f;
+            _alpha = hover ? 0.3f : 0.1f;
 
             if (hover && InputManager.MousePressed())
                 Activated?.Invoke(this, EventArgs.Empty);
